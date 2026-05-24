@@ -206,7 +206,11 @@ kotlin {
         binaries.framework { baseName = "WinapiUtil"; xcf.add(this) }
     }
     iosArm64 {
-        binaries.framework { baseName = "WinapiUtil"; xcf.add(this) }
+        binaries.framework {
+            baseName = "WinapiUtil"
+            isStatic = true
+            xcf.add(this)
+        }
     }
     iosSimulatorArm64 {
         binaries.framework {
