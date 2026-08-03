@@ -3,6 +3,7 @@
 
 package io.github.kotlinmania.winapiutil
 
+import io.github.kotlinmania.winapiutil.cinterop._BY_HANDLE_FILE_INFORMATION
 import io.github.kotlinmania.windowssys.windows.win32.foundation.FILETIME
 import kotlinx.cinterop.cValue
 import kotlinx.cinterop.ptr
@@ -12,7 +13,7 @@ import io.github.kotlinmania.winapiutil.cinterop.GetFileInformationByHandle as w
 import io.github.kotlinmania.winapiutil.cinterop.GetFileType as winGetFileType
 
 public actual fun information(h: AsHandleRef): Information {
-    val info = cValue<BY_HANDLE_FILE_INFORMATION>()
+    val info = cValue<_BY_HANDLE_FILE_INFORMATION>()
     val rc = winGetFileInformationByHandle(h.asRaw().toCPointer(), info.ptr)
     if (rc == 0) {
         throw RuntimeException("GetFileInformationByHandle failed")

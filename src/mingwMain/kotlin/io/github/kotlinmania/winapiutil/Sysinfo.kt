@@ -3,11 +3,14 @@
 
 package io.github.kotlinmania.winapiutil
 
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.UIntVarOf
+import kotlinx.cinterop.UShortVar
+import kotlinx.cinterop.alloc
 import kotlinx.cinterop.allocArray
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import kotlinx.cinterop.toKStringFromUtf16
-import kotlinx.cinterop.value
 import io.github.kotlinmania.winapiutil.cinterop.GetComputerNameExW as winGetComputerNameExW
 
 // COMPUTER_NAME_FORMAT enumeration values from the Windows SDK.
@@ -35,7 +38,7 @@ private fun ComputerNameKind.toFormat(): UInt =
 public actual fun getComputerName(kind: ComputerNameKind): String =
     memScoped {
         val format = kind.toFormat()
-        val lenVar = UIntVar(0u)
+        val lenVar = alloc<UIntVarOf<UInt>>()
         // First call with null buffer to get the required size.
         winGetComputerNameExW(format, null, lenVar.ptr)
         val len = lenVar.value.toInt()
