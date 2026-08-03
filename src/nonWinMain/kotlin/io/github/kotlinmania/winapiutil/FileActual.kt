@@ -5,5 +5,5 @@ package io.github.kotlinmania.winapiutil
 public actual fun information(h: AsHandleRef): Information =
     throw UnsupportedOperationException("winapi-util file is only available on Windows")
 
-public actual fun typ(h: AsHandleRef): Type =
+public actual fun typ(h: AsHandleRef): FileType =
     throw UnsupportedOperationException("winapi-util file is only available on Windows")

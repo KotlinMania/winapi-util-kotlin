@@ -1,13 +1,10 @@
 #ifndef WINAPI_UTIL_EXTRAS_H
 #define WINAPI_UTIL_EXTRAS_H
 
-/* Include windows.h first so that _mingw.h defines EXTERN_C, the base
-   Win32 types (HANDLE, DWORD, BOOL, COORD, etc.), and the Win32
-   calling-convention macros before any of the declarations below. */
+/* Include windows.h — it pulls in all the base Win32 types (HANDLE,
+   DWORD, BOOL, COORD, etc.) and the headers for console, file, and
+   system information APIs. */
 #include <windows.h>
-#include <consoleapi.h>
-#include <fileapi.h>
-#include <sysinfoapi.h>
 
 #ifdef __cplusplus
 extern "C" {

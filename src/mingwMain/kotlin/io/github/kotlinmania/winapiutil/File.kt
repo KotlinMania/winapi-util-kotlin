@@ -45,7 +45,7 @@ public actual fun information(h: AsHandleRef): Information {
     }
 }
 
-public actual fun typ(h: AsHandleRef): Type {
+public actual fun typ(h: AsHandleRef): FileType {
     val rc = winGetFileType(h.asRaw().toCPointer())
-    return Type(rc)
+    return FileType(rc)
 }

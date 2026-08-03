@@ -59,7 +59,9 @@ public class Information internal constructor(
 // Represents a Windows file type.
 //
 // This wraps the result of GetFileType.
-public class Type internal constructor(
+// Named FileType instead of Type to avoid a Swift Export conflict
+// with the built-in Type expression.
+public class FileType internal constructor(
     internal val rawValue: UInt,
 ) {
     // Returns true if this type represents a character file, which is
@@ -95,7 +97,7 @@ internal const val FILE_TYPE_UNKNOWN: UInt = 0u
 public expect fun information(h: AsHandleRef): Information
 
 // Returns the file type of the given handle.
-public expect fun typ(h: AsHandleRef): Type
+public expect fun typ(h: AsHandleRef): FileType
 
 internal fun filetimeToU64(t: FILETIME): ULong? {
     val v = (t.dwHighDateTime.toULong() shl 32) or t.dwLowDateTime.toULong()

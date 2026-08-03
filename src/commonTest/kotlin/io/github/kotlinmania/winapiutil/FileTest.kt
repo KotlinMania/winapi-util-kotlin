@@ -77,25 +77,25 @@ class FileTest {
 
     @Test
     fun typeIsCharReturnsTrueForCharType() {
-        assertEquals(true, Type(FILE_TYPE_CHAR).isChar())
-        assertEquals(false, Type(FILE_TYPE_CHAR).isDisk())
+        assertEquals(true, FileType(FILE_TYPE_CHAR).isChar())
+        assertEquals(false, FileType(FILE_TYPE_CHAR).isDisk())
     }
 
     @Test
     fun typeIsDiskReturnsTrueForDiskType() {
-        assertEquals(true, Type(FILE_TYPE_DISK).isDisk())
-        assertEquals(false, Type(FILE_TYPE_DISK).isPipe())
+        assertEquals(true, FileType(FILE_TYPE_DISK).isDisk())
+        assertEquals(false, FileType(FILE_TYPE_DISK).isPipe())
     }
 
     @Test
     fun typeIsPipeReturnsTrueForPipeType() {
-        assertEquals(true, Type(FILE_TYPE_PIPE).isPipe())
-        assertEquals(false, Type(FILE_TYPE_PIPE).isUnknown())
+        assertEquals(true, FileType(FILE_TYPE_PIPE).isPipe())
+        assertEquals(false, FileType(FILE_TYPE_PIPE).isUnknown())
     }
 
     @Test
     fun typeIsUnknownReturnsTrueForUnknownType() {
-        assertEquals(true, Type(FILE_TYPE_UNKNOWN).isUnknown())
-        assertEquals(false, Type(FILE_TYPE_UNKNOWN).isChar())
+        assertEquals(true, FileType(FILE_TYPE_UNKNOWN).isUnknown())
+        assertEquals(false, FileType(FILE_TYPE_UNKNOWN).isChar())
     }
 }
