@@ -3,7 +3,6 @@
 
 package io.github.kotlinmania.winapiutil
 
-import io.github.kotlinmania.winapiutil.cinterop._CONSOLE_SCREEN_BUFFER_INFO
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.UIntVarOf
 import kotlinx.cinterop.alloc
@@ -18,7 +17,7 @@ import io.github.kotlinmania.winapiutil.cinterop.SetConsoleMode as winSetConsole
 import io.github.kotlinmania.winapiutil.cinterop.SetConsoleTextAttribute as winSetConsoleTextAttribute
 
 public actual fun screenBufferInfo(h: AsHandleRef): ScreenBufferInfo {
-    val info = cValue<_CONSOLE_SCREEN_BUFFER_INFO>()
+    val info = cValue<io.github.kotlinmania.winapiutil.cinterop._CONSOLE_SCREEN_BUFFER_INFO>()
     val rc = winGetConsoleScreenBufferInfo(h.asRaw().toCPointer(), info.ptr)
     if (rc == 0) {
         throw RuntimeException("GetConsoleScreenBufferInfo failed")
