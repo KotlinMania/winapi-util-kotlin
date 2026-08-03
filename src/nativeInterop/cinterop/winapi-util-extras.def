@@ -1,6 +1,0 @@
-package = io.github.kotlinmania.winapiutil.cinterop
-
-headers = winapi-util-extras.h
-compilerOpts = -DUNICODE -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -Wno-incompatible-pointer-types -Wno-deprecated-declarations -Isrc/nativeInterop/cinterop
-linkerOpts = -lkernel32
-depends = platform.windows

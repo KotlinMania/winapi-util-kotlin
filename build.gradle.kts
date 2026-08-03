@@ -425,11 +425,6 @@ kotlin {
     linuxArm64 { configureBenchmarkCompilation() }
     mingwX64 {
         configureBenchmarkCompilation()
-        compilations["main"].cinterops {
-            val winapiUtilExtras by creating {
-                defFile = File(projectDir, "src/nativeInterop/cinterop/winapi-util-extras.def")
-            }
-        }
     }
 
     // Android NDK — always built (full target surface, no opt-in gate).

@@ -4,9 +4,10 @@
 package io.github.kotlinmania.winapiutil
 
 import io.github.kotlinmania.windowssys.windows.win32.foundation.HANDLE
-import platform.windows.INVALID_HANDLE_VALUE
-import io.github.kotlinmania.winapiutil.cinterop.CreateFileW as winCreateFileW
-import io.github.kotlinmania.winapiutil.cinterop.GetStdHandle as winGetStdHandle
+import io.github.kotlinmania.windowssys.windows.win32.foundation.INVALID_HANDLE_VALUE
+import kotlinx.cinterop.toLong
+import platform.windows.CreateFileW as winCreateFileW
+import platform.windows.GetStdHandle as winGetStdHandle
 
 internal const val STD_INPUT_HANDLE: UInt = 0xFFFFFFF6u
 internal const val STD_OUTPUT_HANDLE: UInt = 0xFFFFFFF5u
@@ -29,7 +30,7 @@ internal actual fun openRawHandleForRead(path: String): HANDLE {
             0u,
             null,
         )
-    if (handle?.toLong() == INVALID_HANDLE_VALUE.toLong()) {
+    if (handle?.toLong() == INVALID_HANDLE_VALUE) {
         throw RuntimeException("Failed to open file: $path")
     }
     return handle?.toLong() ?: 0L
@@ -46,7 +47,7 @@ internal actual fun openRawHandleForReadAny(path: String): HANDLE {
             FILE_FLAG_BACKUP_SEMANTICS,
             null,
         )
-    if (handle?.toLong() == INVALID_HANDLE_VALUE.toLong()) {
+    if (handle?.toLong() == INVALID_HANDLE_VALUE) {
         throw RuntimeException("Failed to open file: $path")
     }
     return handle?.toLong() ?: 0L
