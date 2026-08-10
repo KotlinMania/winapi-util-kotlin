@@ -492,46 +492,9 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(commonMainDependencyBundle)
-            implementation(libs.windows.sys)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-        }
-        // Intermediate source set for non-Windows targets. The upstream
-        // crate is completely empty on non-Windows (`#[cfg(windows)]`),
-        // so all FFI functions throw UnsupportedOperationException here.
-        // mingwX64 gets real implementations via mingwMain.
-        val nonWinMain by creating {
-            dependsOn(commonMain.get())
-        }
-        val nonWinTest by creating {
-            dependsOn(commonTest.get())
-        }
-        // Route every non-mingw intermediate source set through
-        // nonWinMain so they pick up the stub actuals. We must NOT
-        // include nativeMain (ancestor of mingwMain) or mingwMain
-        // itself — those get real actuals from mingwMain.
-        listOf(
-            "jvmMain",
-            "jsMain",
-            "wasmJsMain",
-            "wasmWasiMain",
-            "androidMain",
-            "androidHostTest",
-            "linuxMain",
-            "appleMain",
-            "androidNativeMain",
-            "jvmTest",
-            "jsTest",
-            "wasmJsTest",
-            "wasmWasiTest",
-            "linuxTest",
-            "appleTest",
-            "androidNativeTest",
-        ).forEach { sourceSetName ->
-            findByName(sourceSetName)?.dependsOn(
-                if (sourceSetName.endsWith("Test")) nonWinTest else nonWinMain,
-            )
         }
         if (benchmarkEnabled) {
             val commonBenchmark = maybeCreate("commonBenchmark")
