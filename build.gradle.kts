@@ -496,6 +496,34 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
+        val nonWinMain by creating {
+            dependsOn(commonMain.get())
+        }
+        val nonWinTest by creating {
+            dependsOn(commonTest.get())
+        }
+        listOf(
+            "jvmMain",
+            "jsMain",
+            "wasmJsMain",
+            "wasmWasiMain",
+            "androidMain",
+            "androidHostTest",
+            "linuxMain",
+            "appleMain",
+            "androidNativeMain",
+            "jvmTest",
+            "jsTest",
+            "wasmJsTest",
+            "wasmWasiTest",
+            "linuxTest",
+            "appleTest",
+            "androidNativeTest",
+        ).forEach { sourceSetName ->
+            findByName(sourceSetName)?.dependsOn(
+                if (sourceSetName.endsWith("Test")) nonWinTest else nonWinMain,
+            )
+        }
         if (benchmarkEnabled) {
             val commonBenchmark = maybeCreate("commonBenchmark")
             commonBenchmark.dependencies {
