@@ -1,4 +1,4 @@
-// port-lint: tests src/file.rs
+// port-lint: tests file.rs
 package io.github.kotlinmania.winapiutil
 
 import io.github.kotlinmania.windowssys.windows.win32.foundation.FILETIME
