@@ -16,7 +16,7 @@ import platform.windows.GetConsoleScreenBufferInfo as winGetConsoleScreenBufferI
 import platform.windows.SetConsoleMode as winSetConsoleMode
 import platform.windows.SetConsoleTextAttribute as winSetConsoleTextAttribute
 
-public actual fun screenBufferInfo(h: AsHandleRef): ScreenBufferInfo {
+internal actual fun getScreenBufferInfo(h: AsHandleRef): ScreenBufferInfo {
     memScoped {
         val info = alloc<_CONSOLE_SCREEN_BUFFER_INFO>()
         val rc = winGetConsoleScreenBufferInfo(h.asRaw().toCPointer(), info.ptr)
@@ -39,14 +39,14 @@ public actual fun screenBufferInfo(h: AsHandleRef): ScreenBufferInfo {
     }
 }
 
-public actual fun setTextAttributes(h: AsHandleRef, attributes: UShort) {
+internal actual fun setConsoleTextAttributes(h: AsHandleRef, attributes: UShort) {
     val rc = winSetConsoleTextAttribute(h.asRaw().toCPointer(), attributes)
     if (rc == 0) {
         throw RuntimeException("SetConsoleTextAttribute failed")
     }
 }
 
-public actual fun consoleMode(h: AsHandleRef): UInt =
+internal actual fun getConsoleMode(h: AsHandleRef): UInt =
     memScoped {
         val modeVar = alloc<UIntVar>()
         val rc = winGetConsoleMode(h.asRaw().toCPointer(), modeVar.ptr)
@@ -56,7 +56,7 @@ public actual fun consoleMode(h: AsHandleRef): UInt =
         modeVar.value
     }
 
-public actual fun setConsoleMode(h: AsHandleRef, mode: UInt) {
+internal actual fun setConsoleModePlatform(h: AsHandleRef, mode: UInt) {
     val rc = winSetConsoleMode(h.asRaw().toCPointer(), mode)
     if (rc == 0) {
         throw RuntimeException("SetConsoleMode failed")
