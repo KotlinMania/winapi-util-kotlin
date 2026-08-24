@@ -13,7 +13,7 @@ import platform.windows._BY_HANDLE_FILE_INFORMATION
 import platform.windows.GetFileInformationByHandle as winGetFileInformationByHandle
 import platform.windows.GetFileType as winGetFileType
 
-public actual fun information(h: AsHandleRef): Information {
+internal actual fun getFileInformation(h: AsHandleRef): Information {
     memScoped {
         val info = alloc<_BY_HANDLE_FILE_INFORMATION>()
         val rc = winGetFileInformationByHandle(h.asRaw().toCPointer(), info.ptr)
@@ -47,7 +47,7 @@ public actual fun information(h: AsHandleRef): Information {
     }
 }
 
-public actual fun typ(h: AsHandleRef): FileType {
+internal actual fun getFileType(h: AsHandleRef): FileType {
     val rc = winGetFileType(h.asRaw().toCPointer())
     return FileType(rc)
 }

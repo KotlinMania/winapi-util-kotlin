@@ -30,7 +30,8 @@ private fun ComputerNameKind.toFormat(): _COMPUTER_NAME_FORMAT =
         ComputerNameKind.PhysicalNetBios -> _COMPUTER_NAME_FORMAT.ComputerNamePhysicalNetBIOS
     }
 
-public actual fun getComputerName(kind: ComputerNameKind): String =
+internal actual fun getComputerNamePlatform(kind: ComputerNameKind): String =
+
     memScoped {
         val format = kind.toFormat()
         val lenVar = alloc<UIntVar>().apply { value = 0u }

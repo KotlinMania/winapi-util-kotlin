@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import WinapiUtil
 
 // Smoke test for the Kotlin → Swift Export → SPM → swift test pipeline.
@@ -28,8 +28,9 @@ import WinapiUtil
 // Add more meaningful per-API tests below as the Swift Export surface
 // grows. For now the import + a single passing assertion is the
 // canary that the pipeline is green for this repo.
-final class WinapiUtilExportTests: XCTestCase {
-    func testSwiftModuleLoads() throws {
-        XCTAssertTrue(true, "WinapiUtil swift module imported cleanly")
+@Suite struct WinapiUtilExportTests {
+    @Test func testSwiftModuleLoads() throws {
+        #expect(Bool(true), "WinapiUtil swift module imported cleanly")
     }
 }
+
