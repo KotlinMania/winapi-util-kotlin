@@ -150,6 +150,8 @@ public class FileType internal constructor(
     public fun isUnknown(): Boolean = rawValue == FILE_TYPE_UNKNOWN
 }
 
+public typealias Type = FileType
+
 internal const val FILE_TYPE_CHAR: UInt = 2u
 internal const val FILE_TYPE_DISK: UInt = 1u
 internal const val FILE_TYPE_PIPE: UInt = 3u
