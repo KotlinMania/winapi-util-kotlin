@@ -6,8 +6,8 @@ Based on AST analysis, here are the concrete next steps.
 
 - **Files Present:** 5/5 (100.0%)
 - **Function parity:** 58/58 matched (target 99) — 100.0%
-- **Class/type parity:** 14/14 matched (target 22) — 100.0%
-- **Combined symbol parity:** 72/72 matched (target 121) — 100.0%
+- **Class/type parity:** 13/14 matched (target 21) — 92.9%
+- **Combined symbol parity:** 71/72 matched (target 120) — 98.6%
 - **Average inline-code cosine:** 0.37 (function body across 5 matched files)
 - **Average documentation cosine:** 0.83 (doc text across 5 matched files)
 - **Cheat-zeroed Files:** 1
@@ -27,7 +27,18 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. console
+### 1. file
+
+- **Target:** `winapiutil.File`
+- **Similarity:** 0.45
+- **Dependents:** 0
+- **Priority Score:** 11805.5
+- **Functions:** 16/16 matched (target 28)
+- **Missing functions:** _none_
+- **Types:** 1/2 matched (target 3)
+- **Missing types:** `Type`
+
+### 2. console
 
 - **Target:** `winapiutil.Console`
 - **Similarity:** 0.64
@@ -38,7 +49,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 7/7 matched (target 10)
 - **Missing types:** _none_
 
-### 2. win
+### 3. win
 
 - **Target:** `winapiutil.Win`
 - **Similarity:** 0.35
@@ -47,17 +58,6 @@ Every matched file is listed below with function and type symbol parity.
 - **Functions:** 15/15 matched (target 23)
 - **Missing functions:** _none_
 - **Types:** 4/4 matched
-- **Missing types:** _none_
-
-### 3. file
-
-- **Target:** `winapiutil.File`
-- **Similarity:** 0.45
-- **Dependents:** 0
-- **Priority Score:** 1805.5
-- **Functions:** 16/16 matched (target 28)
-- **Missing functions:** _none_
-- **Types:** 2/2 matched (target 4)
 - **Missing types:** _none_
 
 ### 4. sysinfo
