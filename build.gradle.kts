@@ -1028,7 +1028,12 @@ tasks.register("swiftExportSmokeTest") {
             }
         }
 
-        val scratchDir = layout.buildDirectory.dir("swift-test-scratch").get().asFile
+        val scratchDir =
+            layout
+                .buildDirectory
+                .dir("swift-test-scratch")
+                .get()
+                .asFile
         scratchDir.deleteRecursively()
 
         execOperations
