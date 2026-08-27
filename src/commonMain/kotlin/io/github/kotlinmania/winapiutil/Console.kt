@@ -1,4 +1,4 @@
-// port-lint: source winapi-util/src/console.rs
+// port-lint: source console.rs
 package io.github.kotlinmania.winapiutil
 
 // Foreground color bit flags matching the Windows console API.
