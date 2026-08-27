@@ -1,4 +1,4 @@
-// port-lint: tests sysinfo.rs
+// port-lint: tests winapi-util/src/sysinfo.rs
 package io.github.kotlinmania.winapiutil
 
 import kotlin.test.Test

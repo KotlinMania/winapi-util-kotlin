@@ -8,8 +8,8 @@ Based on AST analysis, here are the concrete next steps.
 - **Function parity:** 58/58 matched (target 99) — 100.0%
 - **Class/type parity:** 13/14 matched (target 21) — 92.9%
 - **Combined symbol parity:** 71/72 matched (target 120) — 98.6%
-- **Average inline-code cosine:** 0.37 (function body across 5 matched files)
-- **Average documentation cosine:** 0.83 (doc text across 5 matched files)
+- **Average inline-code cosine:** 0.47 (function body across 4 matched files)
+- **Average documentation cosine:** 0.95 (doc text across 4 matched files)
 - **Cheat-zeroed Files:** 1
 - **Critical Issues:** 4 files with <0.60 function similarity
 
@@ -27,7 +27,7 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. file
+### 1. winapi-util.file
 
 - **Target:** `winapiutil.File`
 - **Similarity:** 0.45
@@ -38,7 +38,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/2 matched (target 3)
 - **Missing types:** `Type`
 
-### 2. console
+### 2. winapi-util.console
 
 - **Target:** `winapiutil.Console`
 - **Similarity:** 0.64
@@ -49,7 +49,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 7/7 matched (target 10)
 - **Missing types:** _none_
 
-### 3. win
+### 3. winapi-util.win
 
 - **Target:** `winapiutil.Win`
 - **Similarity:** 0.35
@@ -60,7 +60,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 4/4 matched
 - **Missing types:** _none_
 
-### 4. sysinfo
+### 4. winapi-util.sysinfo
 
 - **Target:** `winapiutil.Sysinfo`
 - **Similarity:** 0.44
@@ -72,9 +72,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 5. lib
+### 5. winapi-util.lib
 
-- **Target:** `winapiutil.Lib [ZERO]`
+- **Target:** `winapiutil.Lib [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 10.0
