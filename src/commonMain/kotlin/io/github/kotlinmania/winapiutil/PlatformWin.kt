@@ -1,4 +1,4 @@
-// port-lint: source win.rs
+// port-lint: source winapi-util/src/win.rs
 package io.github.kotlinmania.winapiutil
 
 import io.github.kotlinmania.windowssys.windows.win32.foundation.HANDLE
