@@ -27,9 +27,9 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. winapi-util.file
+### 1. file
 
-- **Target:** `winapiutil.File`
+- **Target:** `winapiutil.File [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.45
 - **Dependents:** 0
 - **Priority Score:** 11805.5
@@ -37,10 +37,15 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 1/2 matched (target 3)
 - **Missing types:** `Type`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `winapi-util/src/file.rs` vs expected `file.rs`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:winapi-util/src/file.rs` vs expected `file.rs`
+- **Proposed provenance header:** `// port-lint: source file.rs` (current: `// port-lint: source winapi-util/src/file.rs`)
+- **Proposed provenance header:** `// port-lint: tests file.rs` (current: `// port-lint: tests winapi-util/src/file.rs`)
+- **Lint issues:** 2
 
-### 2. winapi-util.console
+### 2. console
 
-- **Target:** `winapiutil.Console`
+- **Target:** `winapiutil.Console [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.64
 - **Dependents:** 0
 - **Priority Score:** 3103.6
@@ -48,10 +53,15 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 7/7 matched (target 10)
 - **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `winapi-util/src/console.rs` vs expected `console.rs`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:winapi-util/src/console.rs` vs expected `console.rs`
+- **Proposed provenance header:** `// port-lint: source console.rs` (current: `// port-lint: source winapi-util/src/console.rs`)
+- **Proposed provenance header:** `// port-lint: tests console.rs` (current: `// port-lint: tests winapi-util/src/console.rs`)
+- **Lint issues:** 2
 
-### 3. winapi-util.win
+### 3. win
 
-- **Target:** `winapiutil.Win`
+- **Target:** `winapiutil.Win [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.35
 - **Dependents:** 0
 - **Priority Score:** 1906.5
@@ -59,10 +69,15 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 4/4 matched
 - **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `winapi-util/src/win.rs` vs expected `win.rs`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `winapi-util/src/win.rs` vs expected `win.rs`
+- **Proposed provenance header:** `// port-lint: source win.rs` (current: `// port-lint: source winapi-util/src/win.rs`)
+- **Proposed provenance header:** `// port-lint: source win.rs` (current: `// port-lint: source winapi-util/src/win.rs`)
+- **Lint issues:** 2
 
-### 4. winapi-util.sysinfo
+### 4. sysinfo
 
-- **Target:** `winapiutil.Sysinfo`
+- **Target:** `winapiutil.Sysinfo [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.44
 - **Dependents:** 0
 - **Priority Score:** 405.6
@@ -71,6 +86,11 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched (target 2)
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `winapi-util/src/sysinfo.rs` vs expected `sysinfo.rs`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:winapi-util/src/sysinfo.rs` vs expected `sysinfo.rs`
+- **Proposed provenance header:** `// port-lint: source sysinfo.rs` (current: `// port-lint: source winapi-util/src/sysinfo.rs`)
+- **Proposed provenance header:** `// port-lint: tests sysinfo.rs` (current: `// port-lint: tests winapi-util/src/sysinfo.rs`)
+- **Lint issues:** 2
 
 ## Success Criteria
 
@@ -92,5 +112,5 @@ do not treat them as the next implementation target by default.
 
 | Source | Target | Path |
 |--------|--------|------|
-| `winapi-util.lib` | `winapiutil.Lib` | `winapi-util/src/lib` |
+| `lib` | `winapiutil.Lib` | `lib` |
 
