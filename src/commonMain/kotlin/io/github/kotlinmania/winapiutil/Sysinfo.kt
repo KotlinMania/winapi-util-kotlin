@@ -1,4 +1,4 @@
-// port-lint: source sysinfo.rs
+// port-lint: source winapi-util/src/sysinfo.rs
 package io.github.kotlinmania.winapiutil
 
 /**
