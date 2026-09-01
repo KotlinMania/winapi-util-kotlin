@@ -1,4 +1,4 @@
-// port-lint: source winapi-util/src/file.rs
+// port-lint: source file.rs
 package io.github.kotlinmania.winapiutil
 
 import io.github.kotlinmania.windowssys.windows.win32.foundation.FILETIME

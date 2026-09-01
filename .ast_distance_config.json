@@ -2,7 +2,7 @@
   "type": "port",
   "name": "winapi-util-kotlin",
   "source": {
-    "path": "tmp",
+    "path": "tmp/winapi-util/src",
     "lang": "rust"
   },
   "target": {

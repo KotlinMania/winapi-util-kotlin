@@ -1,4 +1,4 @@
-// port-lint: tests winapi-util/src/console.rs
+// port-lint: tests console.rs
 package io.github.kotlinmania.winapiutil
 
 import kotlin.test.Test

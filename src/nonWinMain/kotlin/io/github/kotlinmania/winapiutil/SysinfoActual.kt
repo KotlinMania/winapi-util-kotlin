@@ -1,4 +1,4 @@
-// port-lint: source winapi-util/src/sysinfo.rs
+// port-lint: source sysinfo.rs
 package io.github.kotlinmania.winapiutil
 
 internal actual fun getComputerNamePlatform(kind: ComputerNameKind): String =
