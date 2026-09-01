@@ -1,4 +1,4 @@
-// port-lint: source winapi-util/src/sysinfo.rs
+// port-lint: source sysinfo.rs
 @file:OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
 
 package io.github.kotlinmania.winapiutil

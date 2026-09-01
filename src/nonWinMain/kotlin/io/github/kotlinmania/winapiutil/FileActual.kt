@@ -1,4 +1,4 @@
-// port-lint: source winapi-util/src/file.rs
+// port-lint: source file.rs
 package io.github.kotlinmania.winapiutil
 
 internal actual fun getFileInformation(h: AsHandleRef): Information =
