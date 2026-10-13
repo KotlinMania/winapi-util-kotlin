@@ -18,7 +18,7 @@ import platform.windows._COMPUTER_NAME_FORMAT
 // Mapping from our public enum to the Windows SDK COMPUTER_NAME_FORMAT
 // enumeration values, accessed via the cinterop-generated companion
 // object constants on _COMPUTER_NAME_FORMAT.
-private fun ComputerNameKind.toFormat(): _COMPUTER_NAME_FORMAT =
+private fun ComputerNameKind.toNativeFormat(): _COMPUTER_NAME_FORMAT =
     when (this) {
         ComputerNameKind.DnsDomain -> _COMPUTER_NAME_FORMAT.ComputerNameDnsDomain
         ComputerNameKind.DnsFullyQualified -> _COMPUTER_NAME_FORMAT.ComputerNameDnsFullyQualified
@@ -33,7 +33,7 @@ private fun ComputerNameKind.toFormat(): _COMPUTER_NAME_FORMAT =
 internal actual fun getComputerNamePlatform(kind: ComputerNameKind): String =
 
     memScoped {
-        val format = kind.toFormat()
+        val format = kind.toNativeFormat()
         val lenVar = alloc<UIntVar>().apply { value = 0u }
         // First call with null buffer to get the required size.
         GetComputerNameExW(format, null, lenVar.ptr)
