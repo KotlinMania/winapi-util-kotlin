@@ -87,6 +87,15 @@ val commonBenchmarkDependencyBundle =
             .findBundle(bundleName)
             .orElseThrow { GradleException("Missing libs bundle '$bundleName'") }
     }
+val commonTestBundleName = optionalTrimmedProperty("project.dependencies.commonTestBundle")
+val commonTestDependencyBundle =
+    commonTestBundleName?.let { bundleName ->
+        extensions
+            .getByType(VersionCatalogsExtension::class.java)
+            .named("libs")
+            .findBundle(bundleName)
+            .orElseThrow { GradleException("Missing libs bundle '$bundleName'") }
+    }
 if (benchmarkEnabled && commonBenchmarkDependencyBundle == null) {
     throw GradleException("Feature 'benchmark' requires project.dependencies.commonBenchmarkBundle")
 }
@@ -483,6 +492,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+            commonTestDependencyBundle?.let { implementation(it) }
         }
         val nonWinMain by creating {
             dependsOn(commonMain.get())
@@ -649,8 +659,16 @@ val webpackVersion: String =
 
 rootProject.extensions.configure<NodeJsEnvSpec>("kotlinNodeJsSpec") { version.set(nodeVersion) }
 rootProject.extensions.configure<WasmNodeJsEnvSpec>("kotlinWasmNodeJsSpec") { version.set(wasmNodeVersion) }
-rootProject.extensions.configure<YarnRootEnvSpec>("kotlinYarnSpec") { version.set(yarnVersion) }
-rootProject.extensions.configure<WasmYarnRootEnvSpec>("kotlinWasmYarnSpec") { version.set(wasmYarnVersion) }
+rootProject.extensions.configure<YarnRootEnvSpec>("kotlinYarnSpec") {
+    version.set(yarnVersion)
+    yarnLockMismatchReport.set(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport.WARNING)
+    yarnLockAutoReplace.set(true)
+}
+rootProject.extensions.configure<WasmYarnRootEnvSpec>("kotlinWasmYarnSpec") {
+    version.set(wasmYarnVersion)
+    yarnLockMismatchReport.set(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport.WARNING)
+    yarnLockAutoReplace.set(true)
+}
 
 rootProject.extensions.configure<YarnRootExtension>("kotlinYarn") {
     project.properties
@@ -1025,20 +1043,23 @@ tasks.register("swiftExportSmokeTest") {
 
     doLast {
         val execOperations = serviceOf<ExecOperations>()
-        val swiftBuildDirFile =
+        val swiftBuildFile =
             layout.buildDirectory
                 .dir("swift-test")
                 .get()
                 .asFile
-        swiftBuildDirFile.deleteRecursively()
-        swiftBuildDirFile.mkdirs()
-        val swiftBuildDir = swiftBuildDirFile.absolutePath
+        if (swiftBuildFile.exists()) {
+            swiftBuildFile.deleteRecursively()
+        }
+        swiftBuildFile.mkdirs()
+        val swiftBuildDir = swiftBuildFile.absolutePath
         execOperations
             .exec {
                 workingDir = projectDir
                 commandLine(
                     "./gradlew",
                     "embedSwiftExportForXcode",
+                    "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g",
                     "--no-configuration-cache",
                     "--no-daemon",
                     "--console=plain",
