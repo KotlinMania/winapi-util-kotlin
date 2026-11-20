@@ -15,14 +15,15 @@ struct WinapiUtilExportTests {
     }
 
     @Test func testComputerNameKindFormats() throws {
-        #expect(ComputerNameKind.netBios.toFormat() == 0)
-        #expect(ComputerNameKind.dnsHostname.toFormat() == 1)
-        #expect(ComputerNameKind.dnsDomain.toFormat() == 2)
-        #expect(ComputerNameKind.dnsFullyQualified.toFormat() == 3)
-        #expect(ComputerNameKind.physicalNetBios.toFormat() == 4)
-        #expect(ComputerNameKind.physicalDnsHostname.toFormat() == 5)
-        #expect(ComputerNameKind.physicalDnsDomain.toFormat() == 6)
-        #expect(ComputerNameKind.physicalDnsFullyQualified.toFormat() == 7)
+        #expect(ComputerNameKind.allCases.count == 8)
+        #expect(ComputerNameKind.NetBios.toFormat() == 0)
+        #expect(ComputerNameKind.DnsHostname.toFormat() == 1)
+        #expect(ComputerNameKind.DnsDomain.toFormat() == 2)
+        #expect(ComputerNameKind.DnsFullyQualified.toFormat() == 3)
+        #expect(ComputerNameKind.PhysicalNetBios.toFormat() == 4)
+        #expect(ComputerNameKind.PhysicalDnsHostname.toFormat() == 5)
+        #expect(ComputerNameKind.PhysicalDnsDomain.toFormat() == 6)
+        #expect(ComputerNameKind.PhysicalDnsFullyQualified.toFormat() == 7)
     }
 
     @Test func testHandleAndHandleRefRawRoundTrip() throws {
@@ -52,8 +53,14 @@ struct WinapiUtilExportTests {
         #expect(rect.right == 80)
         #expect(rect.bottom == 25)
 
-        #expect(Color.black != Color.white)
-        #expect(Color.cyan != Color.red)
-        #expect(Intense.yes != Intense.no)
+        let resized = rect.copy(left: 1, top: 2, right: 120, bottom: 40)
+        #expect(resized.right == 120)
+        #expect(resized.bottom == 40)
+        #expect(rect != resized)
+
+        #expect(Color.allCases.count == 8)
+        #expect(Color.Black != Color.White)
+        #expect(Color.Cyan != Color.Red)
+        #expect(Intense.Yes != Intense.No)
     }
 }
