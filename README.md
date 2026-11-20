@@ -91,7 +91,7 @@ supported version of Rust.
 
 ```kotlin
 dependencies {
-    implementation("io.github.kotlinmania:winapi-util-kotlin:0.1.0")
+    implementation("io.github.kotlinmania:winapi-util-kotlin:0.1.2")
 }
 ```
 
