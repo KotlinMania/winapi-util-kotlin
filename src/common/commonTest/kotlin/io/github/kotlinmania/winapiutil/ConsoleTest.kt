@@ -112,6 +112,39 @@ class TextAttributesTest {
     }
 
     @Test
+    fun copyProducesIndependentAttributes() {
+        val start = TextAttributes(fgColor = Color.Green, fgIntense = Intense.Yes)
+        val cur = start.copy()
+        cur.fgColor = Color.Red
+        cur.fgIntense = Intense.No
+        assertEquals(Color.Green, start.fgColor)
+        assertEquals(Intense.Yes, start.fgIntense)
+    }
+
+    @Test
+    fun screenBufferInfoAndSmallRectAccessors() {
+        val info =
+            ScreenBufferInfo(
+                sizeX = 120,
+                sizeY = 40,
+                cursorX = 5,
+                cursorY = 10,
+                attributesValue = (FG_CYAN.toInt() or FG_INTENSITY.toInt()).toUShort(),
+                maxWindowX = 120,
+                maxWindowY = 60,
+                srWindowLeft = 0,
+                srWindowTop = 1,
+                srWindowRight = 119,
+                srWindowBottom = 39,
+            )
+        assertEquals(Pair<Short, Short>(120, 40), info.size())
+        assertEquals(Pair<Short, Short>(5, 10), info.cursorPosition())
+        assertEquals((FG_CYAN.toInt() or FG_INTENSITY.toInt()).toUShort(), info.attributes())
+        assertEquals(Pair<Short, Short>(120, 60), info.maxWindowSize())
+        assertEquals(SmallRect(left = 0, top = 1, right = 119, bottom = 39), info.windowRect())
+    }
+
+    @Test
     fun defaultAttributesAreAllBlackNo() {
         val attr = TextAttributes()
         assertEquals(Color.Black, attr.fgColor)

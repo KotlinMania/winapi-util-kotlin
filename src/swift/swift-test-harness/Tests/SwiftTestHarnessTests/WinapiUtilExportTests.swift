@@ -1,36 +1,59 @@
 import Testing
 import WinapiUtil
 
-// Smoke test for the Kotlin → Swift Export → SPM → swift test pipeline.
-//
-// The file's mere existence and successful compilation prove three layers
-// of the pipeline:
-//
-//   1. `embedSwiftExportForXcode` produced `WinapiUtil.swiftmodule/`
-//      and the supporting KotlinRuntimeSupport / ExportedKotlinPackages /
-//      KotlinRuntime swiftmodule bundles. If any of them were missing,
-//      `import WinapiUtil` above would fail at compile time.
-//
-//   2. The static archive `libWinapiUtil.a` (produced by the
-//      `linkSwiftExportBinaryDebugStaticMacosArm64` and
-//      `mergeMacosDebugSwiftExportLibraries` tasks) supplied every
-//      `__root____*` and `KotlinError`-related symbol the Swift modules
-//      reference. If the archive were missing or empty, this test
-//      executable would fail to link with "undefined symbols for
-//      architecture arm64".
-//
-//   3. The Kotlin `swiftExport { moduleName = "WinapiUtil" }` and
-//      `flattenPackage = "io.github.kotlinmania.winapiutil"` configuration in
-//      build.gradle.kts produced a module name that's both syntactically
-//      valid as a Swift identifier and reachable from this Package.swift
-//      via the `WinapiUtilLibrary` product.
-//
-// Add more meaningful per-API tests below as the Swift Export surface
-// grows. For now the import + a single passing assertion is the
-// canary that the pipeline is green for this repo.
-@Suite struct WinapiUtilExportTests {
+@Suite("WinapiUtil Swift Export Tests")
+struct WinapiUtilExportTests {
     @Test func testSwiftModuleLoads() throws {
         #expect(Bool(true), "WinapiUtil swift module imported cleanly")
     }
-}
 
+    @Test func testIsHiddenAttribute() throws {
+        #expect(isHidden(fileAttributes: FILE_ATTRIBUTE_HIDDEN))
+        #expect(isHidden(fileAttributes: 0x82))
+        #expect(!isHidden(fileAttributes: 0))
+        #expect(!isHidden(fileAttributes: 1))
+    }
+
+    @Test func testComputerNameKindFormats() throws {
+        #expect(ComputerNameKind.netBios.toFormat() == 0)
+        #expect(ComputerNameKind.dnsHostname.toFormat() == 1)
+        #expect(ComputerNameKind.dnsDomain.toFormat() == 2)
+        #expect(ComputerNameKind.dnsFullyQualified.toFormat() == 3)
+        #expect(ComputerNameKind.physicalNetBios.toFormat() == 4)
+        #expect(ComputerNameKind.physicalDnsHostname.toFormat() == 5)
+        #expect(ComputerNameKind.physicalDnsDomain.toFormat() == 6)
+        #expect(ComputerNameKind.physicalDnsFullyQualified.toFormat() == 7)
+    }
+
+    @Test func testHandleAndHandleRefRawRoundTrip() throws {
+        let owned = Handle.Companion.shared.fromRawHandle(handle: 42)
+        #expect(owned.asRawHandle() == 42)
+        #expect(owned.asRaw() == 42)
+
+        let borrowedFromOwned = owned.asHandleRef()
+        #expect(borrowedFromOwned.asRawHandle() == 42)
+        #expect(borrowedFromOwned.asRaw() == 42)
+
+        let extracted = owned.intoRawHandle()
+        #expect(extracted == 42)
+        owned.drop()
+
+        let borrowed = HandleRef.Companion.shared.fromRawHandle(handle: 99)
+        let cloned = borrowed.clone()
+        #expect(borrowed.asRawHandle() == 99)
+        #expect(cloned.asRawHandle() == 99)
+        #expect(cloned.asRaw() == 99)
+    }
+
+    @Test func testSmallRectAndConsoleEnums() throws {
+        let rect = SmallRect(left: 1, top: 2, right: 80, bottom: 25)
+        #expect(rect.left == 1)
+        #expect(rect.top == 2)
+        #expect(rect.right == 80)
+        #expect(rect.bottom == 25)
+
+        #expect(Color.black != Color.white)
+        #expect(Color.cyan != Color.red)
+        #expect(Intense.yes != Intense.no)
+    }
+}

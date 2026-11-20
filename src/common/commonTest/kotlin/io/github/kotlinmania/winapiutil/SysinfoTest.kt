@@ -27,6 +27,18 @@ class SysinfoTest {
     }
 
     @Test
+    fun computerNameKindToFormatMatchesWin32Values() {
+        assertEquals(0, ComputerNameKind.NetBios.toFormat())
+        assertEquals(1, ComputerNameKind.DnsHostname.toFormat())
+        assertEquals(2, ComputerNameKind.DnsDomain.toFormat())
+        assertEquals(3, ComputerNameKind.DnsFullyQualified.toFormat())
+        assertEquals(4, ComputerNameKind.PhysicalNetBios.toFormat())
+        assertEquals(5, ComputerNameKind.PhysicalDnsHostname.toFormat())
+        assertEquals(6, ComputerNameKind.PhysicalDnsDomain.toFormat())
+        assertEquals(7, ComputerNameKind.PhysicalDnsFullyQualified.toFormat())
+    }
+
+    @Test
     fun itworks() {
         val kinds =
             listOf(

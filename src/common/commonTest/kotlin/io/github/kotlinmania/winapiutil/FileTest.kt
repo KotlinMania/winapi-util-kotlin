@@ -98,4 +98,33 @@ class FileTest {
         assertEquals(true, FileType(FILE_TYPE_UNKNOWN).isUnknown())
         assertEquals(false, FileType(FILE_TYPE_UNKNOWN).isChar())
     }
+
+    @Test
+    fun informationAccessorsReturnAllFields() {
+        val created = FILETIME(dwLowDateTime = 1u, dwHighDateTime = 2u)
+        val accessed = FILETIME(dwLowDateTime = 3u, dwHighDateTime = 4u)
+        val written = FILETIME(dwLowDateTime = 0u, dwHighDateTime = 0u)
+        val info =
+            Information(
+                fileAttributesValue = FILE_ATTRIBUTE_HIDDEN.toUInt(),
+                creationTime = created,
+                lastAccessTime = accessed,
+                lastWriteTime = written,
+                volumeSerialNumberValue = 0xCAFEBABEu,
+                fileSizeHigh = 0u,
+                fileSizeLow = 512u,
+                numberOfLinksValue = 3u,
+                fileIndexHigh = 0u,
+                fileIndexLow = 7u,
+            )
+        assertEquals(FILE_ATTRIBUTE_HIDDEN, info.fileAttributes())
+        assertTrue(info.isHidden())
+        assertEquals((2uL shl 32) or 1uL, info.creationTime())
+        assertEquals((4uL shl 32) or 3uL, info.lastAccessTime())
+        assertNull(info.lastWriteTime())
+        assertEquals(0xCAFEBABEuL, info.volumeSerialNumber())
+        assertEquals(512uL, info.fileSize())
+        assertEquals(3uL, info.numberOfLinks())
+        assertEquals(7uL, info.fileIndex())
+    }
 }
