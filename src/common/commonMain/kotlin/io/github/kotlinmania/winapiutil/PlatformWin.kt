@@ -19,3 +19,5 @@ internal expect fun stdinRawHandle(): HANDLE
 internal expect fun stdoutRawHandle(): HANDLE
 
 internal expect fun stderrRawHandle(): HANDLE
+
+internal expect fun closeRawHandle(handle: HANDLE)

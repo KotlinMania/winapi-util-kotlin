@@ -5,7 +5,9 @@ package io.github.kotlinmania.winapiutil
 
 import io.github.kotlinmania.windowssys.windows.win32.foundation.HANDLE
 import io.github.kotlinmania.windowssys.windows.win32.foundation.INVALID_HANDLE_VALUE
+import kotlinx.cinterop.toCPointer
 import kotlinx.cinterop.toLong
+import platform.windows.CloseHandle as winCloseHandle
 import platform.windows.CreateFileW as winCreateFileW
 import platform.windows.GetStdHandle as winGetStdHandle
 
@@ -64,3 +66,9 @@ internal actual fun stdoutRawHandle(): HANDLE =
 
 internal actual fun stderrRawHandle(): HANDLE =
     winGetStdHandle(STD_ERROR_HANDLE)?.toLong() ?: 0L
+
+internal actual fun closeRawHandle(handle: HANDLE) {
+    if (handle != 0L && handle != INVALID_HANDLE_VALUE) {
+        winCloseHandle(handle.toCPointer())
+    }
+}

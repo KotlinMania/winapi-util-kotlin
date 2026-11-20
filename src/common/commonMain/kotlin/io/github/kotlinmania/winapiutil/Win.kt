@@ -15,6 +15,8 @@ public class Handle private constructor(
     public val rawHandle: HANDLE,
 ) : AsHandleRef,
     AutoCloseable {
+    private var closed: Boolean = false
+
     public constructor(rawHandle: HANDLE) : this(null, rawHandle)
 
     /**
@@ -25,7 +27,10 @@ public class Handle private constructor(
     /**
      * Consume this handle and return the underlying raw handle.
      */
-    public fun intoRawHandle(): HANDLE = rawHandle
+    public fun intoRawHandle(): HANDLE {
+        closed = true
+        return rawHandle
+    }
 
     /**
      * Return this handle as a standard File reference.
@@ -40,7 +45,10 @@ public class Handle private constructor(
     override fun asHandleRef(): HandleRef = HandleRef(rawHandle)
 
     override fun close() {
-        // Resource cleanup for owned handle
+        if (!closed) {
+            closed = true
+            closeRawHandle(rawHandle)
+        }
     }
 
     /**

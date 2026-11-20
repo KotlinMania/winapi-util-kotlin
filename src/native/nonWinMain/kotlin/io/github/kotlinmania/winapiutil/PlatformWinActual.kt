@@ -20,3 +20,7 @@ internal actual fun stdoutRawHandle(): HANDLE =
 
 internal actual fun stderrRawHandle(): HANDLE =
     throw UnsupportedOperationException("winapi-util is only available on Windows")
+
+internal actual fun closeRawHandle(handle: HANDLE) {
+    // No OS Win32 handle exists on non-Windows targets.
+}

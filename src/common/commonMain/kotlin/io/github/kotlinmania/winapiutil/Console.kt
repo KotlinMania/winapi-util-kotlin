@@ -197,7 +197,7 @@ public class Console internal constructor(
      * console when this [Console] value was created.
      */
     public fun reset() {
-        curAttr = startAttr
+        curAttr = startAttr.copy()
         set()
     }
 
@@ -236,7 +236,7 @@ public class Console internal constructor(
             val h = kind.handle()
             val info = screenBufferInfo(h)
             val attr = TextAttributes.fromWord(info.attributes())
-            return Console(kind, attr, attr)
+            return Console(kind, attr, attr.copy())
         }
     }
 }

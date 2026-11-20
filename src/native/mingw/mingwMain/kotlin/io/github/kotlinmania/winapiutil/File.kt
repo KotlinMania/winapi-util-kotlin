@@ -4,6 +4,7 @@
 package io.github.kotlinmania.winapiutil
 
 import io.github.kotlinmania.windowssys.windows.win32.foundation.FILETIME
+import io.github.kotlinmania.windowssys.windows.win32.foundation.NO_ERROR
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
@@ -12,6 +13,7 @@ import kotlinx.cinterop.toCPointer
 import platform.windows._BY_HANDLE_FILE_INFORMATION
 import platform.windows.GetFileInformationByHandle as winGetFileInformationByHandle
 import platform.windows.GetFileType as winGetFileType
+import platform.windows.GetLastError as winGetLastError
 
 internal actual fun getFileInformation(h: AsHandleRef): Information {
     memScoped {
@@ -49,5 +51,8 @@ internal actual fun getFileInformation(h: AsHandleRef): Information {
 
 internal actual fun getFileType(h: AsHandleRef): FileType {
     val rc = winGetFileType(h.asRaw().toCPointer())
+    if (rc == FILE_TYPE_UNKNOWN && winGetLastError() != NO_ERROR) {
+        throw RuntimeException("GetFileType failed")
+    }
     return FileType(rc)
 }

@@ -31,20 +31,26 @@ private fun ComputerNameKind.toNativeFormat(): _COMPUTER_NAME_FORMAT =
     }
 
 internal actual fun getComputerNamePlatform(kind: ComputerNameKind): String =
-
     memScoped {
         val format = kind.toNativeFormat()
-        val lenVar = alloc<UIntVar>().apply { value = 0u }
-        // First call with null buffer to get the required size.
-        GetComputerNameExW(format, null, lenVar.ptr)
-        val len = lenVar.value.toInt()
+        val len1Var = alloc<UIntVar>().apply { value = 0u }
+        // First call with null pointer writes the required buffer size (including NUL) to len1.
+        GetComputerNameExW(format, null, len1Var.ptr)
+        val len1 = len1Var.value
 
-        val buf = allocArray<WCHARVar>(len)
-        val rc = GetComputerNameExW(format, buf, lenVar.ptr)
+        val buf = allocArray<WCHARVar>(len1.toInt())
+        val len2Var = alloc<UIntVar>().apply { value = len1 }
+        val rc = GetComputerNameExW(format, buf, len2Var.ptr)
         if (rc == 0) {
             throw RuntimeException("GetComputerNameExW failed")
         }
-        val total = lenVar.value.toInt()
-        val chars = CharArray(total) { i -> buf[i].toInt().toChar() }
+        val len2 = len2Var.value
+        if (len1 <= len2) {
+            throw RuntimeException(
+                "GetComputerNameExW buffer length mismatch, " +
+                    "expected length strictly less than $len1 but got $len2",
+            )
+        }
+        val chars = CharArray(len2.toInt()) { i -> Char(buf[i].toInt()) }
         chars.concatToString()
     }

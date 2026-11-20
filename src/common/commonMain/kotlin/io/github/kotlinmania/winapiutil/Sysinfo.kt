@@ -68,8 +68,27 @@ public enum class ComputerNameKind {
     PhysicalNetBios,
     ;
 
-    public fun toFormat(): Int = ordinal
+    public fun toFormat(): Int =
+        when (this) {
+            DnsDomain -> COMPUTER_NAME_DNS_DOMAIN
+            DnsFullyQualified -> COMPUTER_NAME_DNS_FULLY_QUALIFIED
+            DnsHostname -> COMPUTER_NAME_DNS_HOSTNAME
+            NetBios -> COMPUTER_NAME_NET_BIOS
+            PhysicalDnsDomain -> COMPUTER_NAME_PHYSICAL_DNS_DOMAIN
+            PhysicalDnsFullyQualified -> COMPUTER_NAME_PHYSICAL_DNS_FULLY_QUALIFIED
+            PhysicalDnsHostname -> COMPUTER_NAME_PHYSICAL_DNS_HOSTNAME
+            PhysicalNetBios -> COMPUTER_NAME_PHYSICAL_NET_BIOS
+        }
 }
+
+internal const val COMPUTER_NAME_NET_BIOS: Int = 0
+internal const val COMPUTER_NAME_DNS_HOSTNAME: Int = 1
+internal const val COMPUTER_NAME_DNS_DOMAIN: Int = 2
+internal const val COMPUTER_NAME_DNS_FULLY_QUALIFIED: Int = 3
+internal const val COMPUTER_NAME_PHYSICAL_NET_BIOS: Int = 4
+internal const val COMPUTER_NAME_PHYSICAL_DNS_HOSTNAME: Int = 5
+internal const val COMPUTER_NAME_PHYSICAL_DNS_DOMAIN: Int = 6
+internal const val COMPUTER_NAME_PHYSICAL_DNS_FULLY_QUALIFIED: Int = 7
 
 /**
  * Retrieves a NetBIOS or DNS name associated with the local computer.
