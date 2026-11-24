@@ -899,31 +899,6 @@ kotlin {
             kotlin.setSrcDirs(listOf("$relPath/kotlin"))
             resources.setSrcDirs(listOf("$relPath/resources"))
         }
-// kotlinmania:custom-nonwindows-hierarchy:v1 begin
-        val nonWinMain = maybeCreate("nonWinMain").apply { dependsOn(commonMain.get()) }
-        val nonWinTest = maybeCreate("nonWinTest").apply { dependsOn(commonTest.get()) }
-        listOf(
-            "jvmMain",
-            "jsMain",
-            "wasmJsMain",
-            "wasmWasiMain",
-            "androidMain",
-            "linuxMain",
-            "appleMain",
-            "androidNativeMain",
-            "jvmTest",
-            "jsTest",
-            "wasmJsTest",
-            "wasmWasiTest",
-            "androidHostTest",
-            "androidDeviceTest",
-            "linuxTest",
-            "appleTest",
-            "androidNativeTest",
-        ).forEach { sourceSetName ->
-            findByName(sourceSetName)?.dependsOn(if (sourceSetName.endsWith("Test")) nonWinTest else nonWinMain)
-        }
-// kotlinmania:custom-nonwindows-hierarchy:v1 end
         val projectNsPath = projectNamespace.replace(".", "/")
         commonMain.dependencies {
             commonMainDependencyBundle?.let { implementation(it) }
@@ -1418,20 +1393,20 @@ if (jvmFfiEnabled && jvmTargetEnabled) {
             filter.includeTestsMatching("*.HostIoTest")
         }
     tasks.named("check") { dependsOn(packagedJniTest) }
+}
 
-    if (androidTargetEnabled) {
-        val compileAndroidJni =
-            FfiBuildSupport.registerAndroidJniTask(
-                project,
-                ffiName,
-                ffiNameLower,
-                nativeFfiEnabled,
-                nativeFfiCompileWrapper,
-                projectKonanDataDirectory.get(),
-            )
-        extensions.getByType<KotlinMultiplatformAndroidComponentsExtension>().onVariants { variant ->
-            requireNotNull(variant.sources.jniLibs).addGeneratedSourceDirectory(compileAndroidJni) { it.nativeDirectory }
-        }
+if (jvmFfiEnabled && androidTargetEnabled) {
+    val compileAndroidJni =
+        FfiBuildSupport.registerAndroidJniTask(
+            project,
+            ffiName,
+            ffiNameLower,
+            nativeFfiEnabled,
+            nativeFfiCompileWrapper,
+            projectKonanDataDirectory.get(),
+        )
+    extensions.getByType<KotlinMultiplatformAndroidComponentsExtension>().onVariants { variant ->
+        requireNotNull(variant.sources.jniLibs).addGeneratedSourceDirectory(compileAndroidJni) { it.nativeDirectory }
     }
 }
 
